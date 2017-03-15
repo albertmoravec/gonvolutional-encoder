@@ -16,7 +16,7 @@ var (
 
 func init() {
 	flag.Uint64Var(&Constraint, "k", 0, "Constraint length")
-	polynomials := flag.String("g", "", "Generator polynomials")
+	polynomials := flag.String("g", "", "Generator polynomials")	// TODO throw error on 0 polynomial
 	input := flag.String("i", "", "Input message")
 	flag.Parse()
 
@@ -25,10 +25,10 @@ func init() {
 }
 
 func main() {
-	EncoderObject = Encoder{
+	EncoderObject = Encoder{	// TODO Create constructor func
 		ConstraintLength:     Constraint,
 		GeneratorPolynomials: InputPolynomials,
-		ShiftRegister:        0,
+		Register:             0,
 	}
 
 	fmt.Println(formatBinary(EncoderObject.Encode(Input, BitCount), BitCount*uint64(len(InputPolynomials))))
