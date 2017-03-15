@@ -3,8 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"strconv"
-	"strings"
 )
 
 var (
@@ -33,30 +31,5 @@ func main() {
 		ShiftRegister:        0,
 	}
 
-	fmt.Println(strconv.FormatUint(EncoderObject.Encode(Input, BitCount), 2))
-
-}
-
-func splitPolynomials(input string) []uint64 {
-	var polynomials []uint64
-
-	for _, polynomial := range strings.Split(input, " ") {
-		parsed, err := strconv.ParseUint(polynomial, 8, 32)
-		if err != nil {
-			return nil
-		}
-
-		polynomials = append(polynomials, parsed)
-	}
-
-	return polynomials
-}
-
-func transformMessage(message string) (uint64, uint64) {
-	parsed, err := strconv.ParseUint(message, 2, 64)
-	if err != nil {
-		return 0, 0
-	}
-
-	return parsed, uint64(len(message))
+	fmt.Println(formatBinary(EncoderObject.Encode(Input, BitCount), BitCount*uint64(len(InputPolynomials))))
 }
